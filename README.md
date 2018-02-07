@@ -9,7 +9,7 @@ http://gitlab.com/Indranos/IVR-Connection
 # Cloning the project for building
 Run Git:
 
-    git clone --recursive https://github.com/HellGoose/IVR-Connection.git
+    git clone --recursive https://github.com/Camorte/IVR-Connection.git
 
 This will include submodules found in Plugins/ which are necessary for building the project.
 The project is configured for Unreal Engine 4.14 (other versions are incompatible due to the provided version of the plugins).
