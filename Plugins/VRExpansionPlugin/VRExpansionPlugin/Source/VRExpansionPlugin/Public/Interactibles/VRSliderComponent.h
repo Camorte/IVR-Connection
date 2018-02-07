@@ -8,128 +8,120 @@
 #include "VRGripInterface.h"
 #include "GameplayTagContainer.h"
 #include "GameplayTagAssetInterface.h"
+#include "Components/SplineComponent.h"
 
-
-#include "VRDialComponent.generated.h"
-
-
-/** Delegate for notification when the lever state changes. */
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FVRDialStateChangedSignature, float, DialMilestoneAngle);
+#include "VRSliderComponent.generated.h"
 
 UCLASS(Blueprintable, meta = (BlueprintSpawnableComponent), ClassGroup = (VRExpansionPlugin))
-class VREXPANSIONPLUGIN_API UVRDialComponent : public UStaticMeshComponent, public IVRGripInterface, public IGameplayTagAssetInterface
+class VREXPANSIONPLUGIN_API UVRSliderComponent : public UStaticMeshComponent, public IVRGripInterface, public IGameplayTagAssetInterface
 {
 	GENERATED_UCLASS_BODY()
 
-	~UVRDialComponent();
+	~UVRSliderComponent();
 
-	// Call to use an object
-	UPROPERTY(BlueprintAssignable, Category = "VRDialComponent")
-		FVRDialStateChangedSignature OnDialHitSnapAngle;
 
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Dial Hit Snap Angle"))
-		void ReceiveDialHitSnapAngle(float DialMilestoneAngle);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRSliderComponent")
+	FVector MaxSlideDistance;
 
-	UPROPERTY(BlueprintReadOnly, Category = "VRDialComponent")
-	float CurrentDialAngle;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRSliderComponent")
+	FVector MinSlideDistance;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRDialComponent", meta = (ClampMin = "0.0", ClampMax = "360.0", UIMin = "0.0", UIMax = "360.0"))
-	float ClockwiseMaximumDialAngle;
+	// Gets filled in with the current slider location progress
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "VRSliderComponent")
+	float CurrentSliderProgress;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRDialComponent", meta = (ClampMin = "0.0", ClampMax = "360.0", UIMin = "0.0", UIMax = "360.0"))
-	float CClockwiseMaximumDialAngle;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRSliderComponent")
+	bool bSlideDistanceIsInParentSpace;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRDialComponent")
-	bool bDialUsesAngleSnap;
+	// Set this to assign a spline component to the slider
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "VRSliderComponent")
+	USplineComponent * SplineComponentToFollow; 
 
-	// Angle that the dial snaps to on release and when within the threshold distance
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRDialComponent", meta = (ClampMin = "0.0", ClampMax = "180.0", UIMin = "0.0", UIMax = "180.0"))
-	float SnapAngleIncrement;
-
-	// Threshold distance that when within the dial will stay snapped to its snap increment
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRDialComponent", meta = (ClampMin = "0.0", ClampMax = "180.0", UIMin = "0.0", UIMax = "180.0"))
-	float SnapAngleThreshold;
-
-	// Scales rotational input to speed up or slow down the rotation
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRDialComponent", meta = (ClampMin = "0.0", ClampMax = "180.0", UIMin = "0.0", UIMax = "180.0"))
-	float RotationScaler;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRDialComponent")
-	EVRInteractibleAxis DialRotationAxis;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRDialComponent")
-	EVRInteractibleAxis InteractorRotationAxis;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRSliderComponent")
+	bool bFollowSplineRotationAndScale;
 
 	FTransform InitialRelativeTransform;
-	float CurRotBackEnd;
-	FRotator LastRotation;
-	float LastSnapAngle;
-
 	FVector InitialInteractorLocation;
+	FVector InitialGripLoc;
+	FVector InitialDropLocation;
 
-	// Should be called after the dial is moved post begin play
-	UFUNCTION(BlueprintCallable, Category = "VRLeverComponent")
-	void ResetInitialDialLocation()
+	// Should be called after the slider is moved post begin play
+	UFUNCTION(BlueprintCallable, Category = "VRSliderComponent")
+	void ResetInitialSliderLocation()
 	{
+		if (SplineComponentToFollow != nullptr)
+		{
+			// Snap to start of spline
+			FTransform WorldTransform = SplineComponentToFollow->GetTransformAtSplinePoint(0, ESplineCoordinateSpace::World);
+
+			if (bFollowSplineRotationAndScale)
+			{
+				this->SetWorldLocationAndRotation(WorldTransform.GetLocation(), WorldTransform.GetRotation());
+			}
+			else
+			{
+				this->SetWorldLocation(WorldTransform.GetLocation());
+			}
+
+			GetCurrentSliderProgress(WorldTransform.GetLocation());
+		}
+
 		// Get our initial relative transform to our parent (or not if un-parented).
 		InitialRelativeTransform = this->GetRelativeTransform();
-		CurRotBackEnd = 0.0f;
+
+		if(SplineComponentToFollow == nullptr)
+			CurrentSliderProgress = GetCurrentSliderProgress(FVector(0, 0, 0));
 	}
 
-	// Can be called to recalculate the dial angle after you move it if you want different values
-	UFUNCTION(BlueprintCallable, Category = "VRLeverComponent")
-	void AddDialAngle(float DialAngleDelta, bool bCallEvents = false)
+	// Sets the spline component to follow, if empty, just reinitializes the transform and removes the follow component
+	UFUNCTION(BlueprintCallable, Category = "VRSliderComponent")
+	void SetSplineComponentToFollow(USplineComponent * SplineToFollow)
 	{
-		float MaxCheckValue = 360.0f - CClockwiseMaximumDialAngle;
+		SplineComponentToFollow = SplineToFollow;
+		ResetInitialSliderLocation();
+	}
 
-		float DeltaRot = DialAngleDelta;
-		float tempCheck = FRotator::ClampAxis(CurRotBackEnd + DeltaRot);
-
-		// Clamp it to the boundaries
-		if (FMath::IsNearlyZero(CClockwiseMaximumDialAngle))
+	float GetCurrentSliderProgress(FVector CurLocation)
+	{
+		if (SplineComponentToFollow != nullptr)
 		{
-			CurRotBackEnd = FMath::Clamp(CurRotBackEnd + DeltaRot, 0.0f, ClockwiseMaximumDialAngle);
+			// In this case it is a world location
+			float ClosestKey = SplineComponentToFollow->FindInputKeyClosestToWorldLocation(CurLocation);
+			int32 primaryKey = FMath::TruncToInt(ClosestKey);
+
+			float distance1 = SplineComponentToFollow->GetDistanceAlongSplineAtSplinePoint(primaryKey);
+			float distance2 = SplineComponentToFollow->GetDistanceAlongSplineAtSplinePoint(primaryKey + 1);
+
+			float FinalDistance = ((distance2 - distance1) * (ClosestKey - (float)primaryKey)) + distance1;
+
+			return FMath::Clamp(FinalDistance / SplineComponentToFollow->GetSplineLength(), 0.0f, 1.0f);
 		}
-		else if (FMath::IsNearlyZero(ClockwiseMaximumDialAngle))
-		{
-			if (CurRotBackEnd < MaxCheckValue)
-				CurRotBackEnd = FMath::Clamp(360.0f + DeltaRot, MaxCheckValue, 360.0f);
-			else
-				CurRotBackEnd = FMath::Clamp(CurRotBackEnd + DeltaRot, MaxCheckValue, 360.0f);
-		}
-		else if (tempCheck > ClockwiseMaximumDialAngle && tempCheck < MaxCheckValue)
-		{
-			if (CurRotBackEnd < MaxCheckValue)
-			{
-				CurRotBackEnd = ClockwiseMaximumDialAngle;
-			}
-			else
-			{
-				CurRotBackEnd = MaxCheckValue;
-			}
-		}
-		else
-			CurRotBackEnd = tempCheck;
 
-		if (bDialUsesAngleSnap && FMath::Abs(FMath::Fmod(CurRotBackEnd, SnapAngleIncrement)) <= FMath::Min(SnapAngleIncrement, SnapAngleThreshold))
+		// Should need the clamp normally, but if someone is manually setting locations it could go out of bounds
+		return FMath::Clamp(FVector::Dist(-MinSlideDistance, CurLocation) / FVector::Dist(-MinSlideDistance, MaxSlideDistance), 0.0f, 1.0f);
+	}
+
+	FVector ClampSlideVector(FVector ValueToClamp)
+	{
+		if (bSlideDistanceIsInParentSpace)
 		{
-			this->SetRelativeRotation((FTransform(SetAxisValue(FMath::GridSnap(CurRotBackEnd, SnapAngleIncrement), FRotator::ZeroRotator, DialRotationAxis)) * InitialRelativeTransform).Rotator());
-			CurrentDialAngle = FMath::RoundToFloat(FMath::GridSnap(CurRotBackEnd, SnapAngleIncrement));
+			// Scale distance by initial slider scale
+			FVector fScaleFactor = FVector(1.0f) / InitialRelativeTransform.GetScale3D();
 
-			if (bCallEvents && !FMath::IsNearlyEqual(LastSnapAngle, CurrentDialAngle))
-			{
-				ReceiveDialHitSnapAngle(CurrentDialAngle);
-				OnDialHitSnapAngle.Broadcast(CurrentDialAngle);
-			}
-
-			LastSnapAngle = CurrentDialAngle;
+			return FVector(
+				FMath::Clamp(ValueToClamp.X, -MinSlideDistance.X * fScaleFactor.X, MaxSlideDistance.X * fScaleFactor.X),
+				FMath::Clamp(ValueToClamp.Y, -MinSlideDistance.Y * fScaleFactor.Y, MaxSlideDistance.Y * fScaleFactor.Y),
+				FMath::Clamp(ValueToClamp.Z, -MinSlideDistance.Z * fScaleFactor.Z, MaxSlideDistance.Z * fScaleFactor.Z)
+			);
 		}
 		else
 		{
-			this->SetRelativeRotation((FTransform(SetAxisValue(CurRotBackEnd, FRotator::ZeroRotator, DialRotationAxis)) * InitialRelativeTransform).Rotator());
-			CurrentDialAngle = FMath::RoundToFloat(CurRotBackEnd);
+			return FVector(
+				FMath::Clamp(ValueToClamp.X, -MinSlideDistance.X, MaxSlideDistance.X),
+				FMath::Clamp(ValueToClamp.Y, -MinSlideDistance.Y, MaxSlideDistance.Y),
+				FMath::Clamp(ValueToClamp.Z, -MinSlideDistance.Z, MaxSlideDistance.Z)
+			);
 		}
-
 	}
 
 	// ------------------------------------------------
@@ -168,14 +160,16 @@ class VREXPANSIONPLUGIN_API UVRDialComponent : public UStaticMeshComponent, publ
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VRGripInterface")
 		float BreakDistance;
 
+	UPROPERTY(BlueprintReadWrite, Category = "VRGripInterface")
+		bool bDenyGripping;
+
 	UPROPERTY(BlueprintReadOnly, Category = "VRGripInterface")
 		bool bIsHeld; // Set on grip notify, not net serializing
 
 	UPROPERTY(BlueprintReadOnly, Category = "VRGripInterface")
 		UGripMotionControllerComponent * HoldingController; // Set on grip notify, not net serializing
 
-	UPROPERTY(BlueprintReadWrite, Category = "VRGripInterface")
-		bool bDenyGripping;
+	TWeakObjectPtr<USceneComponent> ParentComponent;
 
 	// Grip interface setup
 
@@ -245,10 +239,9 @@ class VREXPANSIONPLUGIN_API UVRDialComponent : public UStaticMeshComponent, publ
 		void ClosestPrimarySlotInRange(FVector WorldLocation, bool & bHadSlotInRange, FTransform & SlotWorldTransform, UGripMotionControllerComponent * CallingController = nullptr, FName OverridePrefix = NAME_None);
 		*/
 
-	// Get grip slot in range
+		// Get closest primary slot in range
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "VRGripInterface")
 		void ClosestGripSlotInRange(FVector WorldLocation, bool bSecondarySlot, bool & bHadSlotInRange, FTransform & SlotWorldTransform, UGripMotionControllerComponent * CallingController = nullptr, FName OverridePrefix = NAME_None);
-
 
 
 	// Check if the object is an interactable
@@ -322,52 +315,4 @@ class VREXPANSIONPLUGIN_API UVRDialComponent : public UStaticMeshComponent, publ
 
 	protected:
 
-		inline float GetAxisValue(FRotator CheckRotation, EVRInteractibleAxis RotationAxis)
-		{
-			switch (RotationAxis)
-			{
-			case EVRInteractibleAxis::Axis_X:
-				return CheckRotation.Roll; break;
-			case EVRInteractibleAxis::Axis_Y:
-				return CheckRotation.Pitch; break;
-			case EVRInteractibleAxis::Axis_Z:
-				return CheckRotation.Yaw; break;
-			default:return 0.0f; break;
-			}
-		}
-
-		inline FRotator SetAxisValue(float SetValue, EVRInteractibleAxis RotationAxis)
-		{
-			FRotator vec = FRotator::ZeroRotator;
-
-			switch (RotationAxis)
-			{
-			case EVRInteractibleAxis::Axis_X:
-				vec.Roll = SetValue; break;
-			case EVRInteractibleAxis::Axis_Y:
-				vec.Pitch = SetValue; break;
-			case EVRInteractibleAxis::Axis_Z:
-				vec.Yaw = SetValue; break;
-			default:break;
-			}
-
-			return vec;
-		}
-
-		inline FRotator SetAxisValue(float SetValue, FRotator Var, EVRInteractibleAxis RotationAxis)
-		{
-			FRotator vec = Var;
-			switch (RotationAxis)
-			{
-			case EVRInteractibleAxis::Axis_X:
-				vec.Roll = SetValue; break;
-			case EVRInteractibleAxis::Axis_Y:
-				vec.Pitch = SetValue; break;
-			case EVRInteractibleAxis::Axis_Z:
-				vec.Yaw = SetValue; break;
-			default:break;
-			}
-
-			return vec;
-		}
 };
