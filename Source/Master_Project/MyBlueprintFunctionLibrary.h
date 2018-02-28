@@ -18,12 +18,16 @@
 UCLASS(BlueprintType)
 class MASTER_PROJECT_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 {
-	UMyBlueprintFunctionLibrary();
 	GENERATED_BODY()
+
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Initialize Voice Capture", CompactNodeTitle = "InitializeVoiceCapture", KeyWords = ""), Category = "MicrophoneDetection")
+		void Initialize();
 
 		/** What is the current microphone level? ! */
 	UFUNCTION(BlueprintPure, BlueprintCallable, meta = (DisplayName = "Get Mic Level", CompactNodeTitle = "GetMicLevel", KeyWords = "float micLevel"), Category = "MicrophoneDetection")
 		float GetMicLevel();
+
 
 
 		TSharedPtr<class IVoiceCapture> VoiceCapture;

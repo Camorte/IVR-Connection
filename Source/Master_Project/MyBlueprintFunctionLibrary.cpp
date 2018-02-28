@@ -3,28 +3,12 @@
 #include "Master_Project.h"
 #include "MyBlueprintFunctionLibrary.h"
 
-UMyBlueprintFunctionLibrary::UMyBlueprintFunctionLibrary() {
+
+void UMyBlueprintFunctionLibrary::Initialize() {
+	UE_LOG(LogTemp, Warning, TEXT("Voice capture initialized!"));
 	VoiceCapture = FVoiceModule::Get().CreateVoiceCapture();
 	VoiceCapture->Start();
-
-	/*VoiceCaptureAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("VoiceCaptureAudioComponent"));
-	VoiceCaptureAudioComponent->bAutoActivate = true;
-	VoiceCaptureAudioComponent->bAlwaysPlay = true;
-	VoiceCaptureAudioComponent->PitchMultiplier = 0.85f;
-	VoiceCaptureAudioComponent->VolumeMultiplier = 5.f;
-
-	VoiceCaptureSoundWaveProcedural = NewObject<USoundWaveProcedural>();
-	VoiceCaptureSoundWaveProcedural->SampleRate = 22050;
-	VoiceCaptureSoundWaveProcedural->NumChannels = 1;
-	VoiceCaptureSoundWaveProcedural->Duration = INDEFINITELY_LOOPING_DURATION;
-	VoiceCaptureSoundWaveProcedural->SoundGroup = SOUNDGROUP_Voice;
-	VoiceCaptureSoundWaveProcedural->bLooping = false;
-	VoiceCaptureSoundWaveProcedural->bProcedural = true;
-	VoiceCaptureSoundWaveProcedural->Pitch = 0.85f;
-	VoiceCaptureSoundWaveProcedural->Volume = 5.0f;*/
 }
-
-
 
 
 float UMyBlueprintFunctionLibrary::GetMicLevel() {
@@ -33,9 +17,10 @@ float UMyBlueprintFunctionLibrary::GetMicLevel() {
 	if (!VoiceCapture.IsValid())
 		return VoiceCaptureFinalVolume;
 
+	VoiceCaptureBuffer.Reset();
+
 	uint32 VoiceCaptureBytesAvailable = 0;
 	EVoiceCaptureState::Type CaptureState = VoiceCapture->GetCaptureState(VoiceCaptureBytesAvailable);
-	VoiceCaptureBuffer.SetNumUninitialized(VoiceCaptureBytesAvailable);
 
 
 	if (CaptureState == EVoiceCaptureState::Ok && VoiceCaptureBytesAvailable > 0)
@@ -44,6 +29,7 @@ float UMyBlueprintFunctionLibrary::GetMicLevel() {
 		uint32 VoiceCaptureReadBytes;
 		float VoiceCaptureTotalSquared = 0;
 
+		VoiceCaptureBuffer.SetNumUninitialized(VoiceCaptureBytesAvailable);
 
 		VoiceCapture->GetVoiceData(VoiceCaptureBuffer.GetData(), VoiceCaptureBytesAvailable, VoiceCaptureReadBytes);
 
