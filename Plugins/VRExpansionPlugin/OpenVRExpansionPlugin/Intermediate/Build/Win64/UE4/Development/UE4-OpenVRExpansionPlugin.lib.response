@@ -1,0 +1,8 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4\Development\OpenVRExpansionPlugin\Module.OpenVRExpansionPlugin.cpp.obj"
+"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4\Development\OpenVRExpansionPlugin\Module.OpenVRExpansionPlugin.gen.cpp.obj"
+"D:\Migrated_Documents\torstgri\IVR-Connection\Intermediate\Build\Win64\UE4\Development\OpenVRExpansionPlugin\PCLaunch.rc.res"
+/OUT:"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Binaries\Win64\UE4-OpenVRExpansionPlugin.lib"

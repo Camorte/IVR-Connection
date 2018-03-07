@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/LTCG
+"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Shipping\VRExpansionPlugin\Module.VRExpansionPlugin.cpp.obj"
+"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Shipping\VRExpansionPlugin\Module.VRExpansionPlugin.gen.1_of_5.cpp.obj"
+"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Shipping\VRExpansionPlugin\Module.VRExpansionPlugin.gen.2_of_5.cpp.obj"
+"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Shipping\VRExpansionPlugin\Module.VRExpansionPlugin.gen.3_of_5.cpp.obj"
+"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Shipping\VRExpansionPlugin\Module.VRExpansionPlugin.gen.4_of_5.cpp.obj"
+"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Shipping\VRExpansionPlugin\Module.VRExpansionPlugin.gen.5_of_5.cpp.obj"
+"D:\Migrated_Documents\torstgri\IVR-Connection\Intermediate\Build\Win64\UE4\Shipping\VRExpansionPlugin\PCLaunch.rc.res"
+/OUT:"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Binaries\Win64\UE4-VRExpansionPlugin-Win64-Shipping.lib"
