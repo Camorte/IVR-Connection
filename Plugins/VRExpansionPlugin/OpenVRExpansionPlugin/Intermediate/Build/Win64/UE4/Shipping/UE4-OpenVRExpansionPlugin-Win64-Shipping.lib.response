@@ -1,0 +1,9 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/LTCG
+"D:\EiT2018Group6\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4\Shipping\OpenVRExpansionPlugin\Module.OpenVRExpansionPlugin.cpp.obj"
+"D:\EiT2018Group6\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4\Shipping\OpenVRExpansionPlugin\Module.OpenVRExpansionPlugin.gen.cpp.obj"
+"D:\EiT2018Group6\IVR-Connection\Intermediate\Build\Win64\UE4\Shipping\OpenVRExpansionPlugin\PCLaunch.rc.res"
+/OUT:"D:\EiT2018Group6\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Binaries\Win64\UE4-OpenVRExpansionPlugin-Win64-Shipping.lib"
