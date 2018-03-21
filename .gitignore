@@ -77,3 +77,7 @@ Plugins/*/*/Binaries/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Files used for local testing
+Content/InfinityBladeWeapons/*
+Content/Experimental/ExtraToys/*
