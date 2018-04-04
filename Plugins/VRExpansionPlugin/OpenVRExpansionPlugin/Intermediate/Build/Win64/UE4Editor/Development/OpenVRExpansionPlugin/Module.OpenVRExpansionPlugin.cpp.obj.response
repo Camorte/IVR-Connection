@@ -25,10 +25,10 @@
 /w44668
 /I "C:\Program Files\Epic Games\UE_4.18\Engine\Source"
 /I "C:\Program Files\Epic Games\UE_4.18\Engine\Source\Runtime\Engine\Private\PhysicsEngine"
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Source
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Source\OpenVRExpansionPlugin\Public
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Inc\OpenVRExpansionPlugin
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Source\OpenVRExpansionPlugin
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Source
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Source\OpenVRExpansionPlugin\Public
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Inc\OpenVRExpansionPlugin
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Source\OpenVRExpansionPlugin
 /I "C:\Program Files\Epic Games\UE_4.18\Engine\Source\Runtime\Core\Public"
 /I "C:\Program Files\Epic Games\UE_4.18\Engine\Source\Runtime\Core\Public\Internationalization"
 /I "C:\Program Files\Epic Games\UE_4.18\Engine\Source\Runtime\Core\Public\Async"
@@ -374,9 +374,9 @@
 /FI"C:\Program Files\Epic Games\UE_4.18\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h"
 /Yu"C:\Program Files\Epic Games\UE_4.18\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h"
 /Fp"C:\Program Files\Epic Games\UE_4.18\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h.pch"
-"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Development\OpenVRExpansionPlugin\Module.OpenVRExpansionPlugin.cpp"
-/FI"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Development\OpenVRExpansionPlugin\Definitions.OpenVRExpansionPlugin.h"
-/Fo"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Development\OpenVRExpansionPlugin\Module.OpenVRExpansionPlugin.cpp.obj"
+"D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Development\OpenVRExpansionPlugin\Module.OpenVRExpansionPlugin.cpp"
+/FI"D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Development\OpenVRExpansionPlugin\Definitions.OpenVRExpansionPlugin.h"
+/Fo"D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\OpenVRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Development\OpenVRExpansionPlugin\Module.OpenVRExpansionPlugin.cpp.obj"
 /TP
 /GR-
 /W4
