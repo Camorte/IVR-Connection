@@ -75,3 +75,8 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Personal
+Content/Textures/Thumbs.db
+Plugins/VRExpansionPlugin/*
+.gitignore
