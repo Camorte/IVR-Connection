@@ -22,16 +22,16 @@
 /wd4838
 /w44668
 /I "C:\Program Files\Epic Games\UE_4.18\Engine\Source"
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Private
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Private\SimpleChar
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Private
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Private\SimpleChar
 /I "C:\Program Files\Epic Games\UE_4.18\Engine\Source\Runtime\Engine\Private\PhysicsEngine"
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Public
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Public\Interactibles
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Public\Misc
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Public\SimpleChar
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Inc\VRExpansionPlugin
-/I D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Public
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Public\Interactibles
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Public\Misc
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin\Public\SimpleChar
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Inc\VRExpansionPlugin
+/I D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Source\VRExpansionPlugin
 /I "C:\Program Files\Epic Games\UE_4.18\Engine\Source\Runtime\Core\Public"
 /I "C:\Program Files\Epic Games\UE_4.18\Engine\Source\Runtime\Core\Public\Internationalization"
 /I "C:\Program Files\Epic Games\UE_4.18\Engine\Source\Runtime\Core\Public\Async"
@@ -385,8 +385,8 @@
 /DANIMATIONCORE_API=
 /DSETTINGS_API=
 /D_HAS_EXCEPTIONS=0
-"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Development\VRExpansionPlugin\Module.VRExpansionPlugin.cpp"
-/Fo"D:\Migrated_Documents\torstgri\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Development\VRExpansionPlugin\Module.VRExpansionPlugin.cpp.obj"
+"D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Development\VRExpansionPlugin\Module.VRExpansionPlugin.cpp"
+/Fo"D:\EiT2018Group6\Name-fix\IVR-Connection\Plugins\VRExpansionPlugin\VRExpansionPlugin\Intermediate\Build\Win64\UE4\Development\VRExpansionPlugin\Module.VRExpansionPlugin.cpp.obj"
 /TP
 /GR-
 /W4
