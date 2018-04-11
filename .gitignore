@@ -72,9 +72,15 @@ Saved/*
 # Compiled source files for the engine to use
 Intermediate/*
 Plugins/*/Intermediate/*
+Plugins/*/*/Intermediate/*
+Plugins/*/*/Binaries/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Files used for local testing
+Content/InfinityBladeWeapons/*
+Content/Experimental/ExtraToys/*
 
 # Personal
 Content/Textures/Thumbs.db
